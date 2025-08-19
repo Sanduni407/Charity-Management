@@ -3,14 +3,10 @@ import { Users, Heart, Calendar, DollarSign, FileText, TrendingUp, Bell, Setting
 import StatsCard from '../components/adminDahboardComp/StatsCard';
 import QuickActionCard from '../components/adminDahboardComp/QuickActionCard';
 import ActivityItem from '../components/adminDahboardComp/ActivityItem';
-import { useNavigate } from 'react-router-dom';
 
 
 const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
-
-  const navigate = useNavigate();
 
   // Mock data
   const stats = [
@@ -57,7 +53,7 @@ const AdminDashboard = () => {
       description: 'Approve or reject help requests from beneficiaries',
       icon: Heart,
       color: 'bg-gradient-to-br from-green-500 to-green-600',
-      onClick: () => navigate('/admin-view-requests')
+      onClick: () => console.log('Navigate to Requests')
     },
     {
       title: 'Create Post',

@@ -35,16 +35,8 @@ const LoginPage = () => {
   setRole(role);
   setName(name);
 
-       
-     if(role == 'Admin')
-     {
-           window.location.href = "/admin-dashboard";
-     }
-     else{   
       // redirect to home
      window.location.href = "/";
-     }
-
 
       } else {
         setError(response.data.message || "Login failed");
