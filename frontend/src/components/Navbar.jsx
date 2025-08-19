@@ -33,7 +33,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-6">
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Home</Link>
             <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">About</Link>
-            <Link to="/programs" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Programs</Link>
+            <Link to="/donate" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Donate</Link>
             <Link to="/help" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Dashboard</Link>
             <Link to="/admin-dashboard" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Contact</Link>
 
@@ -103,7 +103,7 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 flex flex-col gap-1">
             <Link to="/" className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded">Home</Link>
             <Link to="/about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded">About</Link>
-            <Link to="/programs" className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded">Programs</Link>
+            <Link to="/donate" className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded">Donate</Link>
             <Link to="/dashboard" className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded">Dashboard</Link>
             <Link to="/contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded">Contact</Link>
 

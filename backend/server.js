@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { connectDB } from "./config/db.js";
 import authRouter from './routes/authRoutes.js';
 import helpRequestRouter from './routes/helpRequestRoutes.js'; 
+import postRouter from "./routes/postRoutes.js";
 
 // app config
 const app = express();
@@ -19,6 +20,13 @@ app.use(cors());
 // routes
 app.use('/api/auth', authRouter);
 app.use('/api/help', helpRequestRouter);
+
+
+// Use the post routes
+app.use("/api/posts", postRouter);
+
+// Serve uploaded files
+app.use("/uploads", express.static("uploads"));
 
 // test route
 app.get('/', (req, res) => {
