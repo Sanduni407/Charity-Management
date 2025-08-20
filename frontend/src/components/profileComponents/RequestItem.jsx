@@ -1,49 +1,135 @@
-import React from 'react'
-import { User, FileText, Clock, CheckCircle, AlertCircle, Plus } from 'lucide-react';
-
+import React from 'react';
+import { Clock, CheckCircle, XCircle, MapPin, User, DollarSign, Calendar, Download } from 'lucide-react';
 
 const RequestItem = ({ request }) => {
-  const getStatusColor = (status) => {
+  const getStatusConfig = (status) => {
     switch (status) {
-      case 'approved': return 'bg-green-100 text-green-800 border-green-200';
-      case 'pending': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'in-review': return 'bg-blue-100 text-blue-800 border-blue-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'Approved': 
+        return {
+          color: 'bg-green-100 text-green-800 border-green-200',
+          icon: <CheckCircle className="w-4 h-4" />,
+          bgColor: 'bg-green-50'
+        };
+      case 'Pending': 
+        return {
+          color: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+          icon: <Clock className="w-4 h-4" />,
+          bgColor: 'bg-yellow-50'
+        };
+      case 'Rejected': 
+        return {
+          color: 'bg-red-100 text-red-800 border-red-200',
+          icon: <XCircle className="w-4 h-4" />,
+          bgColor: 'bg-red-50'
+        };
+      default: 
+        return {
+          color: 'bg-gray-100 text-gray-800 border-gray-200',
+          icon: <Clock className="w-4 h-4" />,
+          bgColor: 'bg-gray-50'
+        };
     }
   };
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'approved': return <CheckCircle className="w-4 h-4" />;
-      case 'pending': return <Clock className="w-4 h-4" />;
-      case 'in-review': return <AlertCircle className="w-4 h-4" />;
-      default: return <FileText className="w-4 h-4" />;
+  const statusConfig = getStatusConfig(request.status);
+  const formattedDate = new Date(request.createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+
+  const handleDownloadEvidence = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/help/${request._id}/download`);
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `evidence-${request._id}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+    } catch (error) {
+      console.error('Download failed:', error);
     }
   };
 
   return (
-    <div className="border border-slate-200 rounded-xl p-4 hover:bg-slate-50 transition-colors">
-      <div className="flex items-start justify-between">
+    <div className={`border border-slate-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 ${statusConfig.bgColor}`}>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-2">
-            <h3 className="font-semibold text-slate-800">
-              {request.title}
+            <h3 className="font-semibold text-slate-800 text-base">
+              {request.typeOfHelp}
             </h3>
-            <span className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center space-x-1 ${getStatusColor(request.status)}`}>
-              {getStatusIcon(request.status)}
-              <span className="capitalize">{request.status.replace('-', ' ')}</span>
+            <span className={`px-2 py-1 rounded-full text-xs font-medium border flex items-center space-x-1 ${statusConfig.color}`}>
+              {statusConfig.icon}
+              <span>{request.status}</span>
             </span>
           </div>
-          <p className="text-slate-600 text-sm mb-2">
-            {request.description}
-          </p>
-          <div className="text-xs text-slate-400">
-            Submitted: {new Date(request.date).toLocaleDateString()}
+          
+          {/* Personal Details */}
+          <div className="flex items-center space-x-4 text-sm text-slate-600">
+            <div className="flex items-center">
+              <User className="w-3 h-3 mr-1" />
+              <span>{request.fullName}</span>
+              {request.age && <span className="ml-1">({request.age} years)</span>}
+            </div>
+            {request.location && (
+              <div className="flex items-center">
+                <MapPin className="w-3 h-3 mr-1" />
+                <span>{request.location}</span>
+              </div>
+            )}
           </div>
         </div>
+      </div>
+
+      {/* Description */}
+      <div className="mb-3">
+        <p className="text-slate-700 text-sm leading-relaxed line-clamp-2">
+          {request.description}
+        </p>
+      </div>
+
+      {/* Financial Details */}
+      {request.typeOfHelp === 'Financial Aid' && request.requestedAmount && (
+        <div className="mb-3 p-2 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="flex items-center text-blue-800">
+            <DollarSign className="w-3 h-3 mr-2" />
+            <span className="font-medium text-sm">Requested Amount: ${request.requestedAmount.toLocaleString()}</span>
+          </div>
+          {request.paymentDetails && (
+            <p className="text-blue-700 text-xs mt-1">
+              Payment Details: {request.paymentDetails}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-3 border-t border-slate-200">
+        <div className="flex items-center text-xs text-slate-400">
+          <Calendar className="w-3 h-3 mr-1" />
+          <span>Submitted: {formattedDate}</span>
+        </div>
+        
+        {request.evidenceFileUrl && (
+          <button
+            onClick={handleDownloadEvidence}
+            className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors"
+          >
+            <Download className="w-3 h-3" />
+            <span>Download Evidence</span>
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-export default RequestItem 
+export default RequestItem;
