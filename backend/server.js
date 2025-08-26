@@ -1,39 +1,35 @@
 import express from "express";
 import cors from "cors";
-import 'dotenv/config';
+import "dotenv/config";
 import { connectDB } from "./config/db.js";
-import authRouter from './routes/authRoutes.js';
-import helpRequestRouter from './routes/helpRequestRoutes.js'; 
-import postRouter from "./routes/postRoutes.js";
 
-// app config
+import authRouter from "./routes/authRoutes.js";
+import helpRequestRouter from "./routes/helpRequestRoutes.js";
+import postRouter from "./routes/postRoutes.js";
+import donationRouter from "./routes/donationRoutes.js";
+
 const app = express();
 const port = process.env.PORT || 4000;
 
-// db connection
+// ✅ Connect DB
 connectDB();
 
-// middleware
-app.use(express.json());
+// ✅ Middleware
 app.use(cors());
+app.use(express.json()); // only JSON parser needed now
 
-// routes
-app.use('/api/auth', authRouter);
-app.use('/api/help', helpRequestRouter);
-
-
-// Use the post routes
+// ✅ Routes
+app.use("/api/auth", authRouter);
+app.use("/api/help", helpRequestRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/donations", donationRouter);
 
-// Serve uploaded files
+// ✅ Static uploads
 app.use("/uploads", express.static("uploads"));
 
-// test route
-app.get('/', (req, res) => {
-   res.send("API Working");
-});
+// ✅ Test route
+app.get("/", (req, res) => res.send("API Working"));
 
-// start server
 app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
+  console.log(`🚀 Server started on http://localhost:${port}`);
 });
