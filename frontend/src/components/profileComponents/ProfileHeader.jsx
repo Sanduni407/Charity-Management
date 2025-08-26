@@ -10,7 +10,7 @@ const ProfileHeader = ({ name, requests = [] }) => {
     <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8">
       <div className="flex items-center space-x-6">
         {/* Avatar */}
-        <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+        <div className="w-20 h-20 bg-rose-600 rounded-full flex items-center justify-center shadow-md">
           <span className="text-2xl font-bold text-white">
             {name ? name.charAt(0).toUpperCase() : 'U'}
           </span>
