@@ -1,4 +1,30 @@
 import HelpRequest from '../models/helpRequestModel.js';
+import path from 'path';
+import fs from 'fs';
+
+
+
+// Generate unique beneficiary request code
+const generateBeneficiaryCode = async () => {
+  const lastRequest = await HelpRequest.findOne().sort({ createdAt: -1 });
+  
+  if (!lastRequest) {
+    return "BR1001"; // First request
+  }
+  
+  // Extract number from last code (BR1001 -> 1001)
+  const lastNumber = parseInt(lastRequest.beneficiaryRequestCode.replace('BR', ''));
+  const newNumber = lastNumber + 1;
+  
+  return `BR${newNumber}`;
+};
+
+
+
+
+
+
+
 
 export const submitHelpRequest = async (req, res) => {
   try {
@@ -9,6 +35,10 @@ export const submitHelpRequest = async (req, res) => {
     // Get userId from req.user
     const userId = req.user._id;
 
+
+    // Generate beneficiary request code
+    const beneficiaryRequestCode = await generateBeneficiaryCode();
+
     // Check required fields
     const { fullName, age, location, typeOfHelp, description, requestedAmount, paymentDetails } = req.body;
     if (!fullName || !typeOfHelp || !description) {
@@ -18,6 +48,7 @@ export const submitHelpRequest = async (req, res) => {
     // Build the help request object
     const newRequest = new HelpRequest({
       userId,
+      beneficiaryRequestCode,
       fullName,
       age,
       location,
@@ -93,8 +124,8 @@ export const updateRequestStatus = async (req, res) => {
 
 
 
-import path from 'path';
-import fs from 'fs';
+// import path from 'path';
+// import fs from 'fs';
 
 export const downloadEvidence = async (req, res) => {
   try {
