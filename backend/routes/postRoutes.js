@@ -1,5 +1,5 @@
 import express from "express";
-import { createPost, getPosts } from "../controllers/postController.js";
+import { createPost, getPostById, getPosts } from "../controllers/postController.js";
 import upload from "../middleware/upload.js"; // your existing multer
 
 const router = express.Router();
@@ -9,5 +9,7 @@ router.post("/create", upload.single("image"), createPost);
 
 // Get all posts
 router.get("/", getPosts);
+
+router.get("/:id", getPostById);
 
 export default router;

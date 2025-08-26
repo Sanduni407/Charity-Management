@@ -7,6 +7,11 @@ const postSchema = new mongoose.Schema(
       ref: "helprequest",
       required: true,
     },
+     beneficiaryRequestCode: {
+      type: String,
+      required: true,
+      // This will store BR1001, BR1002, etc.
+    },
 
     beneficiaryName: { type: String, required: true },
     description: { type: String, required: true },
