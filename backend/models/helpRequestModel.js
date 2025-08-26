@@ -7,6 +7,12 @@ const helpRequestSchema = new mongoose.Schema({
     ref: 'User', 
     required: true
    },
+    beneficiaryRequestCode: {
+    type: String,
+    unique: true,
+    required: true,
+    // Will be auto-generated like BR1001, BR1002, etc.
+  },
   fullName: { type: String,
      required: true 
     },
