@@ -1,10 +1,27 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom'
 import { Search, Heart, Target, Clock, Users, MapPin, Calendar } from 'lucide-react';
 
 
 
 
 const DonateCard= ({ post }) => {
+
+
+
+  const navigate = useNavigate();
+
+  const handleDonateClick = () => {
+    const token = localStorage.getItem("token"); // or sessionStorage
+    if (token) {
+      navigate(`/posts/${post._id}`); // go to details page
+    } else {
+      navigate("/login"); // go to login page
+    }
+  };
+
+
+
   const getUrgencyColor = (urgency) => {
     switch (urgency) {
       case 'Low': return 'bg-white text-green-700 border border-green-300 shadow-sm';
@@ -83,7 +100,7 @@ const DonateCard= ({ post }) => {
               Progress
             </span>
             <span className="text-sm text-gray-600 font-semibold">
-              ${post.collectedAmount?.toLocaleString() || '0'} / ${post.goalAmount?.toLocaleString() || '0'}
+              LKR {post.collectedAmount?.toLocaleString() || '0'} / LKR {post.goalAmount?.toLocaleString() || '0'}
             </span>
           </div>
           
@@ -99,7 +116,7 @@ const DonateCard= ({ post }) => {
               <div className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
               {progressPercentage.toFixed(1)}% raised
             </span>
-            <button className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <button  onClick={handleDonateClick} className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
               <Heart className="h-4 w-4" />
               Donate Now
             </button>
