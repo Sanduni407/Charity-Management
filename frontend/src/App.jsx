@@ -10,6 +10,9 @@ import AdminDashboard from './pages/AdminDashboard '
 import AdminHelpRequests from './pages/AdminHelpRequests'
 import CreatePostPage from './pages/CreatePostPage'
 import DonateRequests from './pages/donateRequests'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetOtpVerifyPage from './pages/ResetOtpVerifyPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 const App = () => {
   return (
@@ -25,6 +28,12 @@ const App = () => {
                 <Route path='/admin-view-requests' element={<AdminHelpRequests/>} />
                  <Route path='/admin/create-post/:requestId' element={<CreatePostPage/>} />
                   <Route path='/donate' element={<DonateRequests/>} />
+
+
+
+                   <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="/reset-otp-verify" element={<ResetOtpVerifyPage />} />
+                     <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Routes>
     </div>
   )

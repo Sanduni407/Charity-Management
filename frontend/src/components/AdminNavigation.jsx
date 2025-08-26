@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Home, LogOut, Heart, LayoutDashboard } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext'; // Adjust path as needed
+import { assets } from "../assets/assets";
 
 export default function AdminNavigation() {
   const navigate = useNavigate();
@@ -34,18 +35,22 @@ export default function AdminNavigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           
-          {/* Logo Section */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white fill-current" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">
-                Echo<span className="text-red-500">Kind</span>
-              </h1>
-              <p className="text-xs text-gray-500">Admin Panel</p>
-            </div>
-          </div>
+        
+
+            {/* Logo */}
+      <div className="flex-shrink-0 flex items-center gap-2">
+        <img 
+            src={assets.logo} 
+            alt="EchoKind Logo"
+            className="h-10 w-auto object-contain" // keeps proportion, height fixed
+        />
+       <Link to="/" className="text-gray-900 font-bold text-xl">
+       <div>
+         EchoKind
+          <p className="text-xs text-gray-500">Admin Panel</p>
+         </div>
+      </Link>
+     </div>
 
           {/* Navigation Buttons */}
           <div className="flex items-center space-x-4">
