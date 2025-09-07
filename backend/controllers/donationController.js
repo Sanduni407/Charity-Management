@@ -263,3 +263,34 @@ export const getDonationsByRequestCode = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+
+
+
+// Get monthly donation analytics
+export const getDonationAnalytics = async (req, res) => {
+  try {
+    const analytics = await Donation.aggregate([
+      {
+        $group: {
+          _id: {
+            requestCode: "$beneficiaryRequestCode",
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" }
+          },
+          totalAmountLKR: { $sum: "$amountLKR" },
+          totalAmountUSD: { $sum: "$amountUSD" },
+          donationCount: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1 }
+      }
+    ]);
+
+    res.status(200).json({ success: true, data: analytics });
+  } catch (error) {
+    console.error("Donation analytics error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};

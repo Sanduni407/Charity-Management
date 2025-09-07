@@ -1,7 +1,7 @@
 import express from 'express';
 import userAuth from '../middleware/auth.js';
 import upload from '../middleware/upload.js';
-import { downloadEvidence, getAllHelpRequests, getMyHelpRequests, submitHelpRequest, updateRequestStatus } from '../controllers/helpRequestController.js';
+import { deleteHelpRequest, downloadEvidence, getAllHelpRequests, getHelpRequestById, getMyHelpRequests, submitHelpRequest, updateHelpRequest, updateRequestStatus } from '../controllers/helpRequestController.js';
 
 const router = express.Router();
 
@@ -28,6 +28,16 @@ router.get('/:id/download', downloadEvidence);
 
 // Get requests for logged-in beneficiary
 router.post('/my-requests', userAuth, getMyHelpRequests);
+
+
+
+router.put('/:id',  upload.single('evidenceFile'),  userAuth,  updateHelpRequest);
+
+
+router.get('/:id',  getHelpRequestById);
+
+
+router.delete('/:id', deleteHelpRequest);
 
 
 

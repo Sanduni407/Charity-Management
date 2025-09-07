@@ -170,3 +170,109 @@ export const getMyHelpRequests = async (req, res) => {
 
 
 
+
+
+export const updateHelpRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Find existing request
+    const existingRequest = await HelpRequest.findById(id);
+    if (!existingRequest) {
+      return res.status(404).json({ success: false, message: 'Request not found' });
+    }
+
+    // Only allow editing pending requests
+    if (existingRequest.status !== 'Pending') {
+      return res.status(400).json({ success: false, message: 'Only pending requests can be edited' });
+    }
+
+    // Handle file update - if new file uploaded, delete old one
+    if (req.file && existingRequest.evidenceFileUrl && fs.existsSync(existingRequest.evidenceFileUrl)) {
+      fs.unlinkSync(existingRequest.evidenceFileUrl);
+    }
+
+    // Prepare update data
+    const { fullName, age, location, typeOfHelp, description, requestedAmount, paymentDetails } = req.body;
+    
+    const updateData = {
+      ...req.body,
+      evidenceFileUrl: req.file ? req.file.path : existingRequest.evidenceFileUrl
+    };
+
+    const updatedRequest = await HelpRequest.findByIdAndUpdate(id, updateData, { new: true });
+
+    res.status(200).json({
+      success: true,
+      message: 'Request updated successfully',
+      data: updatedRequest
+    });
+
+  } catch (error) {
+    // Cleanup new file if error occurred
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+
+
+// Get single help request by ID
+export const getHelpRequestById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const request = await HelpRequest.findById(id);
+    
+    if (!request) {
+      return res.status(404).json({ success: false, message: 'Request not found' });
+    }
+
+    res.status(200).json({ success: true, data: request });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+
+
+export const deleteHelpRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Find the request
+    const request = await HelpRequest.findById(id);
+    
+    if (!request) {
+      return res.status(404).json({ success: false, message: 'Request not found' });
+    }
+
+    // Only allow deleting pending requests
+    if (request.status !== 'Pending') {
+      return res.status(400).json({ success: false, message: 'Only pending requests can be deleted' });
+    }
+
+    // Delete associated file if exists
+    if (request.evidenceFileUrl && fs.existsSync(request.evidenceFileUrl)) {
+      fs.unlinkSync(request.evidenceFileUrl);
+    }
+
+    // Delete from database
+    await HelpRequest.findByIdAndDelete(id);
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'Request deleted successfully' 
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+

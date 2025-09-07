@@ -1,7 +1,16 @@
 import React from 'react';
-import { Clock, CheckCircle, XCircle, MapPin, User, DollarSign, Calendar, Download } from 'lucide-react';
+import { 
+  Clock, CheckCircle, XCircle, MapPin, User, DollarSign, Calendar, Download,
+  Pencil, Trash2
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const RequestItem = ({ request }) => {
+const RequestItem = ({ request, onEdit }) => {
+
+  const navigate = useNavigate();
+
+
   const getStatusConfig = (status) => {
     switch (status) {
       case 'Approved': 
@@ -56,6 +65,25 @@ const RequestItem = ({ request }) => {
       console.error('Download failed:', error);
     }
   };
+
+
+    const onDelete = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this request?");
+    if (!confirmed) return;
+
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/help/${id}`);
+      if (response.status === 200) {
+        alert("Request deleted successfully");
+       
+      }
+    } catch (err) {
+      console.log("error in delete", err);
+      alert("Failed to delete request");
+    }
+  };
+
+  
 
   return (
     <div className={`border border-slate-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 ${statusConfig.bgColor}`}>
@@ -118,15 +146,38 @@ const RequestItem = ({ request }) => {
           <span>Submitted: {formattedDate}</span>
         </div>
         
-        {request.evidenceFileUrl && (
-          <button
-            onClick={handleDownloadEvidence}
-            className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors"
-          >
-            <Download className="w-3 h-3" />
-            <span>Download Evidence</span>
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {request.evidenceFileUrl && (
+            <button
+              onClick={handleDownloadEvidence}
+              className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors"
+            >
+              <Download className="w-3 h-3" />
+              <span>Download</span>
+            </button>
+          )}
+
+          {/* ✅ Show only if Pending */}
+          {request.status === 'Pending' && (
+            <>
+              <button
+               onClick={() => navigate(`/update-request/${request._id}`)}
+                className="bg-green-100 text-green-700 rounded-full px-3 py-1 flex items-center gap-1 hover:bg-green-200 transition"
+              >
+                <Pencil size={14} />
+                <span className="text-xs font-medium">Edit</span>
+              </button>
+
+              <button
+                onClick={() => onDelete(request._id)}
+                className="bg-red-100 text-red-700 rounded-full px-3 py-1 flex items-center gap-1 hover:bg-red-200 transition"
+              >
+                <Trash2 size={14} />
+                <span className="text-xs font-medium">Delete</span>
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

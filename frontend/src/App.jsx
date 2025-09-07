@@ -12,6 +12,8 @@ import CreatePostPage from './pages/CreatePostPage'
 import DonateRequests from './pages/donateRequests'
 import PostDetailsPage from './pages/PostDetailsPage'
 import DonationSuccess from './pages/DonationSuccess'
+import AdminDonationAnalyticsPage from './pages/AdminDonationAnalytics'
+import HelpRequestUpdateForm from './pages/HelpRequestUpdateForm'
 
 const App = () => {
   return (
@@ -29,6 +31,8 @@ const App = () => {
                   <Route path='/donate' element={<DonateRequests/>} />
                   <Route path='/posts/:id' element={<PostDetailsPage/>} />
                   <Route path="/donation-success" element={<DonationSuccess/>} />
+                    <Route path="/donation-analytics" element={<AdminDonationAnalyticsPage/>} />
+                      <Route path="/update-request/:id" element={<HelpRequestUpdateForm/>} />
       </Routes>
     </div>
   )

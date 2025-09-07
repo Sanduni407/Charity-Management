@@ -41,11 +41,11 @@ const AdminDashboard = () => {
       onClick: () => console.log('Navigate to Events')
     },
     {
-      title: 'View Donations',
+      title: 'Donation Analytics',
       description: 'Track donations and manage financial records',
       icon: DollarSign,
       color: 'bg-gradient-to-br from-teal-500 to-teal-600',
-      onClick: () => console.log('Navigate to Donations')
+      onClick: () => navigate('/donation-analytics')
     },
     {
       title: 'Generate Reports',
