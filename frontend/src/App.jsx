@@ -17,6 +17,8 @@ import HelpRequestUpdateForm from './pages/HelpRequestUpdateForm'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetOtpVerifyPage from './pages/ResetOtpVerifyPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import DonorProfile from './pages/DonorProfile'
+
 
 const App = () => {
   return (
@@ -39,6 +41,7 @@ const App = () => {
                        <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
                        <Route path="/reset-otp-verify" element={<ResetOtpVerifyPage/>} />
                        <Route path="/reset-password" element={<ResetPasswordPage/>} />
+                       <Route path="/donor-profile" element={<DonorProfile/>} />
       </Routes>
     </div>
   )

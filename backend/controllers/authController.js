@@ -158,7 +158,7 @@ export const profileDetails = async(req,res) =>{
 
   try{
 
-    const userId = req.userId;
+    const userId = req.body.userId;
 
     if(!userId)
     {
