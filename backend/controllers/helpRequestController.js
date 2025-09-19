@@ -29,8 +29,7 @@ const generateBeneficiaryCode = async () => {
 export const submitHelpRequest = async (req, res) => {
   try {
 
-    console.log('REQ.BODY:', req.body);
-  console.log('REQ.FILE:', req.file);
+  
 
     // Get userId from req.user
     const userId = req.user._id;
@@ -124,8 +123,7 @@ export const updateRequestStatus = async (req, res) => {
 
 
 
-// import path from 'path';
-// import fs from 'fs';
+
 
 export const downloadEvidence = async (req, res) => {
   try {

@@ -14,6 +14,9 @@ import PostDetailsPage from './pages/PostDetailsPage'
 import DonationSuccess from './pages/DonationSuccess'
 import AdminDonationAnalyticsPage from './pages/AdminDonationAnalytics'
 import HelpRequestUpdateForm from './pages/HelpRequestUpdateForm'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetOtpVerifyPage from './pages/ResetOtpVerifyPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 const App = () => {
   return (
@@ -33,6 +36,9 @@ const App = () => {
                   <Route path="/donation-success" element={<DonationSuccess/>} />
                     <Route path="/donation-analytics" element={<AdminDonationAnalyticsPage/>} />
                       <Route path="/update-request/:id" element={<HelpRequestUpdateForm/>} />
+                       <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
+                       <Route path="/reset-otp-verify" element={<ResetOtpVerifyPage/>} />
+                       <Route path="/reset-password" element={<ResetPasswordPage/>} />
       </Routes>
     </div>
   )

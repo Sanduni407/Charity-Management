@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext"; // make sure the path is correct
 import { Eye, EyeOff, Loader2, LogIn, Shield, Users, Heart, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { setToken, setRole, setName } = useContext(AppContext); // get setToken from context
@@ -171,9 +172,9 @@ const LoginPage = () => {
                     <input type="checkbox" className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" />
                     <span className="ml-2 text-gray-600">Remember me</span>
                   </label>
-                  <a href="/forgot-password" className="text-indigo-600 hover:text-indigo-700 font-medium">
+                  <Link to="/forgot-password" className="text-indigo-600 hover:text-indigo-700 font-medium">
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
 
                 {error && (
