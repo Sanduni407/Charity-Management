@@ -63,7 +63,7 @@ const Home = () => {
             
             <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
               Where Compassion 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-blue-700"> Meets Action</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-950 to-blue-800"> Meets Action</span>
             </h2>
             
             <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-16">
@@ -213,7 +213,7 @@ const Home = () => {
 
             {posts.length > 0 && (
               <div className="text-center mt-12">
-                <button className="bg-gradient-to-r from-rose-600 to-blue-700 text-white px-8 py-4 rounded-full hover:from-rose-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button className="bg-gradient-to-r from-blue-950 to-blue-800 text-white px-8 py-4 rounded-full hover:from-blue-800 hover:to-blue-950 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                   View All Requests
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </button>

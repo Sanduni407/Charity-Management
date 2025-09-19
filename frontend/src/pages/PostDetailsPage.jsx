@@ -148,7 +148,7 @@ const PostDetailsPage = () => {
               {/* Story Section */}
               <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-rose-500 to-blue-700 rounded-2xl flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-rose-500 rounded-2xl flex items-center justify-center mr-4">
                     <Heart className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -210,7 +210,7 @@ const PostDetailsPage = () => {
                   <div className="mb-8">
                     <div className="w-full bg-gray-100 rounded-full h-6 shadow-inner mb-4">
                       <div
-                        className="bg-gradient-to-r from-rose-500 via-rose-600 to-yellow-500 h-6 rounded-full transition-all duration-700 relative overflow-hidden"
+                        className="bg-gradient-to-r from-blue-950 to-blue-800 h-6 rounded-full transition-all duration-700 relative overflow-hidden"
                         style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                       >
                         <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
@@ -241,7 +241,7 @@ const PostDetailsPage = () => {
                   <div className="space-y-4">
                     <button
                       onClick={() => setShowDonationForm(true)}
-                      className="w-full bg-gradient-to-r from-rose-600 to-blue-700 hover:from-rose-700 hover:to-blue-800 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                      className="w-full bg-gradient-to-r from-blue-950 to-blue-800 hover:from-blue-800 hover:to-blue-950 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
                     >
                       <Heart className="w-6 h-6" />
                       Make a Donation

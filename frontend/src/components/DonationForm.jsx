@@ -125,7 +125,7 @@ const DonationForm = ({ post, onClose }) => {
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sticky top-6">
                   <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-r from-rose-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-rose-500  rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <Heart className="w-8 h-8 text-white" />
                     </div>
                     <div className="inline-flex items-center bg-yellow-50 text-yellow-700 rounded-full px-3 py-1 text-sm font-semibold mb-3 border border-yellow-200">
@@ -291,7 +291,7 @@ const DonationForm = ({ post, onClose }) => {
                       <button
                         onClick={handleDonation}
                         disabled={loading}
-                        className="flex-2 py-4 px-8 bg-gradient-to-r from-rose-600 to-blue-700 text-white rounded-xl font-semibold hover:from-rose-700 hover:to-blue-800 transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg hover:shadow-xl"
+                        className="flex-2 py-4 px-8 bg-gradient-to-r from-blue-950 to-blue-800 text-white rounded-xl font-semibold hover:from-blue-800 hover:to-blue-950 transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg hover:shadow-xl"
                       >
                         {loading ? (
                           <>

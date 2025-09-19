@@ -106,7 +106,7 @@ const DonateCard= ({ post }) => {
           
           <div className="w-full bg-gray-100 rounded-full h-3 shadow-inner">
             <div 
-              className="bg-gradient-to-r from-red-500 via-red-600 to-yellow-500 h-3 rounded-full transition-all duration-500 shadow-sm"
+              className="bg-gradient-to-r from-blue-950 to-blue-800 h-3 rounded-full transition-all duration-500 shadow-sm"
               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
             ></div>
           </div>
