@@ -161,7 +161,7 @@ const DonationSuccess = () => {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <button
                       onClick={handleGoHome}
-                      className="bg-gradient-to-r from-rose-600 to-blue-700 text-white px-8 py-4 rounded-full hover:from-rose-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
+                      className="bg-gradient-to-r from-blue-950 to-blue-800 text-white px-8 py-4 rounded-full hover:from-blue-800 hover:to-blue-950 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
                     >
                       <Home className="w-5 h-5" />
                       <span>Return to Home</span>
