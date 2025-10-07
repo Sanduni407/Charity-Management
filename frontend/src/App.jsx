@@ -19,6 +19,16 @@ import ResetOtpVerifyPage from './pages/ResetOtpVerifyPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import DonorProfile from './pages/DonorProfile'
 
+import Community from './pages/Community'
+import CreateCommunityPost from './pages/CreateCommunityPost'
+
+import AdminManageEvents from './pages/AdminManageEvents'
+import AdminCreateEvent from './pages/AdminCreateEvent'
+import AdminEventAnalytics from './pages/AdminEventAnalytics'
+import Events from './pages/Events'
+import EventDetails from './pages/EventDetails'
+import EventRegistration from './pages/EventRegistration'
+
 
 const App = () => {
   return (
@@ -42,6 +52,23 @@ const App = () => {
                        <Route path="/reset-otp-verify" element={<ResetOtpVerifyPage/>} />
                        <Route path="/reset-password" element={<ResetPasswordPage/>} />
                        <Route path="/donor-profile" element={<DonorProfile/>} />
+
+
+                    <Route path="/community" element={<Community />} />
+                   <Route path="/community/create" element={<CreateCommunityPost />} />
+                   <Route path="/community/edit" element={<CreateCommunityPost />} />
+
+
+                   <Route path="/admin/manage-events" element={<AdminManageEvents />} />
+                   <Route path="/admin/create-event" element={<AdminCreateEvent />} />
+                  <Route path="/admin/edit-event" element={<AdminCreateEvent />} />
+                 <Route path="/admin/event/:eventId/analytics" element={<AdminEventAnalytics />} />
+
+
+                <Route path="/events" element={<Events />} />
+               <Route path="/event/:eventId" element={<EventDetails />} />
+              <Route path="/event/:eventId/register" element={<EventRegistration />} />
+
       </Routes>
     </div>
   )

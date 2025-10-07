@@ -42,8 +42,8 @@ const Navbar = ({ scrollToFooter }) => { // Receive scroll function as prop
             <Link to="/" className="hover:text-red-500 transition-colors duration-200 font-medium">Home</Link>
             <Link to="/about" className="hover:text-red-500 transition-colors duration-200 font-medium">About</Link>
             <Link to="/donate" className="hover:text-red-500 transition-colors duration-200 font-medium">Donate</Link>
-            <Link to="#" className="hover:text-red-500 transition-colors duration-200 font-medium">Community</Link>
-            <Link to="#" className="hover:text-red-500 transition-colors duration-200 font-medium">Events</Link>
+            <Link to="/community" className="hover:text-red-500 transition-colors duration-200 font-medium">Community</Link>
+            <Link to="/events" className="hover:text-red-500 transition-colors duration-200 font-medium">Workshops</Link>
 
             {/* Contact button scrolls to footer */}
             <button

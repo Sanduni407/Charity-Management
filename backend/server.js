@@ -7,6 +7,8 @@ import authRouter from "./routes/authRoutes.js";
 import helpRequestRouter from "./routes/helpRequestRoutes.js";
 import postRouter from "./routes/postRoutes.js";
 import donationRouter from "./routes/donationRoutes.js";
+import communityPostRouter from "./routes/communityPostRoutes.js";
+import eventRouter from "./routes/eventRoutes.js"; 
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -23,6 +25,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/help", helpRequestRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/donations", donationRouter);
+app.use("/api/community", communityPostRouter);
+app.use("/api/event", eventRouter);
 
 // ✅ Static uploads
 app.use("/uploads", express.static("uploads"));
