@@ -38,7 +38,7 @@ const AdminDashboard = () => {
       description: 'Create and organize charity events',
       icon: Calendar,
       color: 'bg-gradient-to-br from-orange-500 to-orange-600',
-      onClick: () => console.log('Navigate to Events')
+       onClick: () => navigate('/admin/manage-events')
     },
     {
       title: 'Donation Analytics',
