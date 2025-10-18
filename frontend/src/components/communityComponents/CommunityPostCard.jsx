@@ -80,3 +80,103 @@ const CommunityPostCard = ({ post, onUpdate, showActions = false }) => {
             </div>
           </div>
         </div>
+
+         {/* Menu - Only show if owner or showActions is true */}
+        {(isOwner || showActions) && (
+          <div className="relative">
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <MoreVertical className="w-5 h-5 text-gray-500" />
+            </button>
+
+            {showMenu && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-10">
+                <button
+                  onClick={handleEdit}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center space-x-2"
+                >
+                  <Edit2 className="w-4 h-4 text-blue-600" />
+                  <span>Edit Post</span>
+                </button>
+                <button
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center space-x-2 text-red-600"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>{deleting ? 'Deleting...' : 'Delete Post'}</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Topic Badge */}
+      <div className="px-4 pb-2">
+        <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+          {post.topic}
+        </span>
+      </div>
+
+      {/* Description */}
+      <div className="px-4 pb-4">
+        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{post.description}</p>
+      </div>
+
+      {/* Image */}
+      {post.imageUrl && (
+        <div className="relative w-full" style={{ maxHeight: '500px' }}>
+          <img
+            src={`${backendUrl}${post.imageUrl}`}
+            alt={post.topic}
+            className="w-full h-auto object-cover"
+            style={{ maxHeight: '500px' }}
+          />
+        </div>
+      )}
+
+      {/* Stats */}
+      <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+        <span>{post.likesCount} {post.likesCount === 1 ? 'like' : 'likes'}</span>
+        <span>{post.commentsCount} {post.commentsCount === 1 ? 'comment' : 'comments'}</span>
+      </div>
+
+      {/* Actions */}
+      <div className="px-4 py-2 border-t border-gray-100 flex items-center justify-around">
+        <LikeButton
+          postId={post._id}
+          initialLiked={post.isLiked}
+          initialCount={post.likesCount}
+          onUpdate={onUpdate}
+        />
+
+        <button
+          onClick={() => setShowComments(!showComments)}
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          <MessageCircle className={`w-5 h-5 ${showComments ? 'text-blue-600' : 'text-gray-600'}`} />
+          <span className={`font-medium ${showComments ? 'text-blue-600' : 'text-gray-600'}`}>
+            Comment
+          </span>
+        </button>
+
+        <button className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
+          <Share2 className="w-5 h-5 text-gray-600" />
+          <span className="font-medium text-gray-600">Share</span>
+        </button>
+      </div>
+
+      {/* Comments Section */}
+      {showComments && (
+        <div className="border-t border-gray-100">
+          <CommentSection postId={post._id} onUpdate={onUpdate} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CommunityPostCard;
