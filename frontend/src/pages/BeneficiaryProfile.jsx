@@ -6,6 +6,7 @@ import RequestHelpCard from '../components/profileComponents/RequestHelpCard';
 import QuickStatsCard from '../components/profileComponents/QuickStatsCard';
 import OngoingRequests from '../components/profileComponents/OngoingRequests';
 import Navbar from '../components/Navbar';
+import UserCommunityPosts from '../components/communityComponents/UserCommunityPosts';
 import { AlertCircle, Loader2 } from 'lucide-react';
 
 const BeneficiaryProfile = () => {
@@ -84,6 +85,10 @@ const BeneficiaryProfile = () => {
         ) : (
           <OngoingRequests requests={ongoingRequests} />
         )}
+
+          {/* Community Posts Section */}
+        <UserCommunityPosts />
+
       </div>
     </div>
   );
