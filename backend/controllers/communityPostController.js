@@ -436,3 +436,102 @@ export const getPostComments = async (req, res) => {
     });
   }
 };
+
+
+// Delete comment
+export const deleteComment = async (req, res) => {
+  try {
+    const { postId, commentId } = req.params;
+    const userId = req.user._id;
+
+    const comment = await CommunityComment.findById(commentId);
+
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comment not found",
+      });
+    }
+
+    // Check if comment belongs to this post
+    if (comment.postId.toString() !== postId) {
+      return res.status(400).json({
+        success: false,
+        message: "Comment does not belong to this post",
+      });
+    }
+
+    const post = await CommunityPost.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+
+    // Check if user owns the comment or the post
+    if (
+      comment.userId.toString() !== userId.toString() &&
+      post.userId.toString() !== userId.toString()
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only delete your own comments",
+      });
+    }
+
+    // Delete comment
+    await CommunityComment.findByIdAndDelete(commentId);
+
+    // Decrement comments count
+    post.commentsCount = Math.max(0, post.commentsCount - 1);
+    await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Comment deleted successfully",
+      commentsCount: post.commentsCount,
+    });
+  } catch (error) {
+    console.error("Delete comment error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// Get likes for a post
+export const getPostLikes = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const likes = await CommunityLike.find({ postId })
+      .populate("userId", "name email")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await CommunityLike.countDocuments({ postId });
+
+    res.status(200).json({
+      success: true,
+      data: likes,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+      },
+    });
+  } catch (error) {
+    console.error("Get likes error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
