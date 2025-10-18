@@ -285,3 +285,154 @@ export const deleteCommunityPost = async (req, res) => {
     });
   }
 };
+
+
+// Toggle like on a post
+export const toggleLike = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.user._id;
+    const userName = req.user.name;
+
+    const post = await CommunityPost.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+
+    // Check if user already liked
+    const existingLike = await CommunityLike.findOne({ postId, userId });
+
+    if (existingLike) {
+      // Unlike - delete the like
+      await CommunityLike.findByIdAndDelete(existingLike._id);
+      
+      // Decrement likes count
+      post.likesCount = Math.max(0, post.likesCount - 1);
+      await post.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Post unliked",
+        liked: false,
+        likesCount: post.likesCount,
+      });
+    } else {
+      // Like - create new like
+      await CommunityLike.create({
+        postId,
+        userId,
+        userName,
+      });
+
+      // Increment likes count
+      post.likesCount += 1;
+      await post.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Post liked",
+        liked: true,
+        likesCount: post.likesCount,
+      });
+    }
+  } catch (error) {
+    console.error("Toggle like error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// Add comment to a post
+export const addComment = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { comment } = req.body;
+    const userId = req.user._id;
+    const userName = req.user.name;
+
+    if (!comment || comment.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Comment cannot be empty",
+      });
+    }
+
+    const post = await CommunityPost.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+
+    // Create new comment
+    const newComment = await CommunityComment.create({
+      postId,
+      userId,
+      userName,
+      comment: comment.trim(),
+    });
+
+    // Increment comments count
+    post.commentsCount += 1;
+    await post.save();
+
+    // Populate user info
+    const populatedComment = await CommunityComment.findById(newComment._id)
+      .populate("userId", "name email");
+
+    res.status(201).json({
+      success: true,
+      message: "Comment added successfully",
+      data: populatedComment,
+      commentsCount: post.commentsCount,
+    });
+  } catch (error) {
+    console.error("Add comment error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// Get comments for a post
+export const getPostComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const comments = await CommunityComment.find({ postId })
+      .populate("userId", "name email")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await CommunityComment.countDocuments({ postId });
+
+    res.status(200).json({
+      success: true,
+      data: comments,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+      },
+    });
+  } catch (error) {
+    console.error("Get comments error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
